@@ -1,0 +1,49 @@
+# This is a workflow to help us get started Actions with file location and name .github/workflows/techtrends-dockerhub.yaml
+
+# Set the name of the workflow
+name: TechTrends - Package with Docker
+# Set the trigger policy that controls when the action will run
+# Triggers the workflow on a push event or when a new commit is pushed to the repository to the main branch
+on:
+  push:
+    branches: [ main ]
+# List the steps to be executed by the workflow
+jobs:
+  # Set the name of the job
+  build:
+    # Configure the operating system that the workflow will run on
+    runs-on: ubuntu-latest
+    # Define a sequence of steps that will be executed as part of the job
+    steps:
+      -
+        name: Checkout
+        # Use the public checkout action in version v2
+        # to checkout the existing code in the repository
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+	# To enable the execution of different multi-architecture containers
+	# Create the execution enviroments for our containers
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+	# To use an extended Docker CLI build capabilities
+	# Provide a more extensive interface to build our Docker image
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+	# To logging into DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Docker Build and Push
+        # To build and push our Docker image into DockerHub
+        uses: docker/build-push-action@v2
+        with:
+          context: ./project
+          file: ./project/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: adrianagorri/techtrends:latest
