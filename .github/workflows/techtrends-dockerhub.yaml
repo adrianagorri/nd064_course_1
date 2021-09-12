@@ -22,17 +22,17 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Set up QEMU
-	# To enable the execution of different multi-architecture containers
-	# Create the execution enviroments for our containers
+        # To enable the execution of different multi-architecture containers
+        # Create the execution enviroments for our containers
         uses: docker/setup-qemu-action@v1
       -
         name: Set up Docker Buildx
-	# To use an extended Docker CLI build capabilities
-	# Provide a more extensive interface to build our Docker image
+        # To use an extended Docker CLI build capabilities
+        # Provide a more extensive interface to build our Docker image
         uses: docker/setup-buildx-action@v1
       -
         name: Login to DockerHub
-	# To logging into DockerHub
+        # To logging into DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
