@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: techtrends
+  name: techtrends
+  namespace: sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: techtrends
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: techtrends
+    spec:
+      containers:
+        ## Set the image to be executed inside the container and image pull policy
+      - image: adrianagorri/techtrends:latest
+        imagePullPolicy: IfNotPresent
+        name: techtrends
+        ## Expose the port the container is listening on.
+        ports:
+        - containerPort: 3111
+        ## Define the rules for the liveness probes.
+        livenessProbe:
+           httpGet:
+             path: /healthz
+             port: 3111
+        ## Define the rules for the readiness probes.
+        readinessProbe:
+           httpGet:
+             path: /healthz
+             port: 3111
+        ## Set the resources requests and limits for an application.
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        #resources: {}
+status: {}
