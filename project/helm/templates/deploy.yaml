@@ -29,13 +29,13 @@ spec:
         ## Define the rules for the liveness probes.
         livenessProbe:
            httpGet:
-             path: {{ .Values.livenessProbe.path }}
-             port: {{ .Values.containerPort }}
+             path: {{ .Values.livenessProbe.httpGet.path }}
+             port: {{ .Values.livenessProbe.httpGet.port }}
         ## Define the rules for the readiness probes.
         readinessProbe:
            httpGet:
-             path: {{ .Values.readinessProbe.path }}
-             port: {{ .Values.containerPort }}
+             path: {{ .Values.readinessProbe.httpGet.path }}
+             port: {{ .Values.readinessProbe.httpGet.port }}
         ## Set the resources requests and limits for an application.
         resources:
           requests:
